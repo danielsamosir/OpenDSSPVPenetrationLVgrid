@@ -1,0 +1,370 @@
+Clear 
+
+// -------------------------------------------------------------------------- //
+// Source (Infinite Bus)
+// -------------------------------------------------------------------------- //
+New circuit.primary 
+~ basekv=10   pu=1.01   phase=3   bus1=All 
+~ MVAsc3=20000   MVAsc1=21000  !To stiffen the source
+
+
+// -------------------------------------------------------------------------- //
+// Transformer Model 
+// -------------------------------------------------------------------------- //
+// Secondary Transformer
+New Transformer.T1 phases=3 windings=2 xhl=4.829
+~ wdg=1 bus=All conn=delta kv=11 kva=800 %r=0.4145
+~ wdg=2 maxtap=1.1125 mintap=0.925 NumTaps=8 bus=B1.1.2.3.0 conn=wye kv=0.42 kva=800 %r=0.4145 
+New Regcontrol.REGTR1 transformer=T1 enabled = yes winding=2 tapwinding=1 vreg=100 ptratio=(400 3 sqrt / 100 /)  band=1 maxtapchange=1
+
+New Transformer.T2 phases=3 windings=2 xhl=4.829
+~ wdg=1 bus=All conn=delta kv=11 kva=800 %r=0.4145
+~ wdg=2 maxtap=1.1125 mintap=0.925 NumTaps=8 bus=B2.1.2.3.0 conn=wye kv=0.42 kva=800 %r=0.4145 
+New Regcontrol.REGTR2 transformer=T2 enabled = yes winding=2 tapwinding=1 vreg=100 ptratio=(400 3 sqrt / 100 /)  band=1 maxtapchange=1
+
+
+// -------------------------------------------------------------------------- //
+// Line Model 
+// -------------------------------------------------------------------------- //
+!  Cable 95AX
+New CNData.95AX
+~ NormAmps = 250
+~ Runits=kft Radunits=in GMRunits=in
+~ InsLayer=0.22 DiaIns=0.72 DiaCable=0.876 epsR=2.3         !Cable
+~ Rac=0.097536 GMRac=0.477 diam=0.433071                   !Phase Conductor
+~ Rstrand=2.55 GMRstrand=0.02496 DiaStrand=0.064 k=13  !Neutral
+
+!  Cable 150AX
+New CNData.150AX
+~ NormAmps = 335
+~ Runits=kft Radunits=in GMRunits=in
+~ InsLayer=0.22 DiaIns=1.16 DiaCable=1.29 epsR=2.3         !Cable
+~ Rac=0.0627888 GMRac=0.7788 diam=0.5433071              !Phase Conductor
+~ Rstrand=2.55 GMRstrand=0.02496 DiaStrand=0.064 k=13  !Neutral
+
+!  Cable 50FKKJ
+New CNData.50FKKJ
+~ NormAmps = 168
+~ Runits=kft Radunits=in GMRunits=in
+~ InsLayer=0.22 DiaIns=1.16 DiaCable=1.29 epsR=2.3         !Cable
+~ Rac=0.1953768 GMRac=0.7788 diam=0.314961              !Phase Conductor
+~ Rstrand=2.55 GMRstrand=0.02496 DiaStrand=0.064 k=13  !Neutral
+
+!  Cable 120FKKJ
+New CNData.120FKKJ
+~ NormAmps = 168
+~ Runits=kft Radunits=in GMRunits=in
+~ InsLayer=0.22 DiaIns=1.16 DiaCable=1.29 epsR=2.3         !Cable
+~ Rac=0.0771144 GMRac=0.7788 diam=0.488189              !Phase Conductor
+~ Rstrand=2.55 GMRstrand=0.02496 DiaStrand=0.064 k=13  !Neutral
+
+!  Cable 240AKKJ
+New CNData.240AKKJ
+~ NormAmps = 453
+~ Runits=kft Radunits=in GMRunits=in
+~ InsLayer=0.22 DiaIns=1.16 DiaCable=1.29 epsR=2.3         !Cable
+~ Rac=0.0381 GMRac=0.7788 diam=0.6889764              !Phase Conductor
+~ Rstrand=2.55 GMRstrand=0.02496 DiaStrand=0.064 k=13  !Neutral
+
+!  Cable 240N1XV
+New CNData.240N1XV
+~ NormAmps = 453
+~ Runits=kft Radunits=in GMRunits=in
+~ InsLayer=0.22 DiaIns=1.16 DiaCable=1.29 epsR=2.3         !Cable
+~ Rac=0.0381 GMRac=0.7788 diam=0.6889764              !Phase Conductor
+~ Rstrand=2.55 GMRstrand=0.02496 DiaStrand=0.064 k=13  !Neutral
+
+New LineGeometry.95AX nconds=3 nphases=3 units=ft
+~ cond=1 cncable=95AX x=-0.0796666666667 h=-4
+~ cond=2 cncable=95AX x=0 h=-4
+~ cond=3 cncable=95AX x=0.0796666666667 h=-4
+
+New LineGeometry.150AX nconds=3 nphases=3 units=ft
+~ cond=1 cncable=150AX x=-0.0796666666667 h=-4
+~ cond=2 cncable=150AX x=0 h=-4
+~ cond=3 cncable=150AX x=0.0796666666667 h=-4
+
+New LineGeometry.50FKKJ nconds=3 nphases=3 units=ft
+~ cond=1 cncable=50FKKJ x=-0.0796666666667 h=-4
+~ cond=2 cncable=50FKKJ x=0 h=-4
+~ cond=3 cncable=50FKKJ x=0.0796666666667 h=-4
+
+New LineGeometry.120FKKJ nconds=3 nphases=3 units=ft
+~ cond=1 cncable=120FKKJ x=-0.0796666666667 h=-4
+~ cond=2 cncable=120FKKJ x=0 h=-4
+~ cond=3 cncable=120FKKJ x=0.0796666666667 h=-4
+
+New LineGeometry.240AKKJ nconds=3 nphases=3 units=ft
+~ cond=1 cncable=240AKKJ x=-0.0796666666667 h=-4
+~ cond=2 cncable=240AKKJ x=0 h=-4
+~ cond=3 cncable=240AKKJ x=0.0796666666667 h=-4
+
+New LineGeometry.240N1XV nconds=3 nphases=3 units=ft
+~ cond=1 cncable=240N1XV x=-0.0796666666667 h=-4
+~ cond=2 cncable=240N1XV x=0 h=-4
+~ cond=3 cncable=240N1XV x=0.0796666666667 h=-4
+
+New LineGeometry.2x240N1XV nconds=6 nphases=3 units=ft
+~ cond=1 cncable=240N1XV x=-0.0796666666667 h=-4
+~ cond=2 cncable=240N1XV x=0 h=-4
+~ cond=3 cncable=240N1XV x=0.0796666666667 h=-4
+~ cond=4 cncable=240N1XV x=-0.0796666666667 h=-8
+~ cond=5 cncable=240N1XV x=0 h=-10
+~ cond=6 cncable=240N1XV x=0.0796666666667 h=-8
+
+New Line.Line1    phases=3   bus1=B1   bus2=B4     geometry=95AX   length=0.02   units=km
+New Line.Line2    phases=3   bus1=B4   bus2=B9     geometry=120FKKJ   length=0.1   units=km
+New Line.Line3    phases=3   bus1=B4   bus2=B10   geometry=240AKKJ   length=0.2   units=km
+New Line.Line4    phases=3   bus1=B1.1.2.3.1.2.3   bus2=B5.1.2.3.1.2.3     geometry=2x240N1XV   length=0.13   units=km
+New Line.Line5    phases=3   bus1=B2   bus2=B6     geometry=240N1XV   length=0.13   units=km
+New Line.Line6    phases=3   bus1=B2   bus2=B7     geometry=240N1XV   length=0.2   units=km
+New Line.Line7    phases=3   bus1=B7   bus2=B11   geometry=120FKKJ   length=0.07     units=km
+New Line.Line8    phases=3   bus1=B2   bus2=B8     geometry=240N1XV   length=0.19   units=km
+New Line.Line9    phases=3   bus1=B8   bus2=B12   geometry=50FKKJ   length=0.1   units=km
+
+
+// -------------------------------------------------------------------------- //
+// Load Model 
+// -------------------------------------------------------------------------- //
+
+//Loadshape (Summer Load) 
+New loadshape.load1   npts=24   interval=1
+~ mult=(0.315352292	0.2718554241	0.2283585563	0.2174843393	0.2174843393	0.2174843393	0.2283585563	0.2392327732	0.326226509	0.3479749429	0.3588491599	0.3805975938	0.3805975938	0.3697233768	0.3479749429	0.3479749429	0.3805975938	0.4023460277	0.4349686786	0.5654592822	0.5980819331	0.5763334992	0.5437108483	0.4349686786)
+New loadshape.load2   npts=24   interval=1
+~ mult=(0.312564704	0.269452331	0.2263399581	0.2155618648	0.2155618648	0.2155618648	0.2263399581	0.2371180513	0.3233427973	0.3448989837	0.355677077	0.3772332635	0.3772332635	0.3664551702	0.3448989837	0.3448989837	0.3772332635	0.3987894499	0.4311237297	0.5604608486	0.5927951283	0.5712389418	0.5389046621	0.4311237297)
+New loadshape.load3   npts=24   interval=1
+~ mult=(0.3110063332	0.2681089079	0.2252114826	0.2144871263	0.2144871263	0.2144871263	0.2252114826	0.2359358389	0.3217306895	0.3431794021	0.3539037584	0.3753524711	0.3753524711	0.3646281147	0.3431794021	0.3431794021	0.3753524711	0.3968011837	0.4289742526	0.5576665284	0.5898395974	0.5683908847	0.5362178158	0.4289742526)
+New loadshape.load4   npts=24   interval=1
+~ mult=(0.2581406132	0.2283551578	0.2084981876	0.1985697024	0.1886412173	0.1787127322	0.1985697024	0.2283551578	0.3474969793	0.4169963751	0.5162812263	0.5460666817	0.5460666817	0.5361381966	0.5361381966	0.5460666817	0.5361381966	0.5262097114	0.4964242561	0.4964242561	0.4964242561	0.4467818305	0.3971394049	0.2978545537)
+New loadshape.load5   npts=24   interval=1
+~ mult=(0.2180161604	0.1895792699	0.1611423794	0.1579827249	0.1453441069	0.1421844524	0.1516634159	0.1801003064	0.2843689048	0.3475619948	0.4107550848	0.4455112842	0.4423516297	0.4391919752	0.4297130117	0.4297130117	0.4391919752	0.4265533572	0.3886375033	0.3949568123	0.3917971578	0.3475619948	0.3191251043	0.2527723598)
+New loadshape.load6   npts=24   interval=1
+~ mult=(0.2055158929	0.1824673816	0.1574981609	0.1536567424	0.1402117774	0.1344496496	0.1459739052	0.1863088001	0.2785028455	0.3514897982	0.4263974601	0.4686530642	0.4686530642	0.4609702271	0.4513666807	0.4513666807	0.4609702271	0.4417631343	0.4033489487	0.3937454023	0.3841418559	0.3322827054	0.3015513569	0.2400886599)
+New loadshape.load7   npts=24   interval=1
+~ mult=(0.3312803471	0.2855865062	0.2398926652	0.2284692049	0.2284692049	0.2284692049	0.2398926652	0.2513161254	0.3427038074	0.3655507279	0.3769741881	0.3998211086	0.3998211086	0.3883976484	0.3655507279	0.3655507279	0.3998211086	0.4226680291	0.4569384098	0.5940199328	0.6282903135	0.605443393	0.5711730123	0.4569384098)
+New loadshape.load8   npts=24   interval=1
+~ mult=(0.318275399	0.274375344	0.2304752889	0.2195002752	0.2195002752	0.2195002752	0.2304752889	0.2414503027	0.3292504128	0.3512004403	0.3621754541	0.3841254816	0.3841254816	0.3731504678	0.3512004403	0.3512004403	0.3841254816	0.4060755091	0.4390005504	0.5707007155	0.6036257568	0.5816757292	0.548750688	0.4390005504)
+New loadshape.load9   npts=24   interval=1
+~ mult=(0.3155149356	0.2719956341	0.2284763327	0.2175965073	0.2175965073	0.2175965073	0.2284763327	0.239356158	0.326394761	0.3481544117	0.3590342371	0.3807938878	0.3807938878	0.3699140624	0.3481544117	0.3481544117	0.3807938878	0.4025535385	0.4351930146	0.565750919	0.5983903951	0.5766307444	0.5439912683	0.4351930146)
+New loadshape.load10   npts=24   interval=1
+~ mult=(0.3131301366	0.269939773	0.2267494093	0.2159518184	0.2159518184	0.2159518184	0.2267494093	0.2375470002	0.3239277276	0.3455229094	0.3563205003	0.3779156822	0.3779156822	0.3671180912	0.3455229094	0.3455229094	0.3779156822	0.399510864	0.4319036367	0.5614747278	0.5938675005	0.5722723187	0.5398795459	0.4319036367)
+New loadshape.load11   npts=24   interval=1
+~ mult=(0.3084394347	0.2658960644	0.2233526941	0.2127168515	0.2127168515	0.2127168515	0.2233526941	0.2339885367	0.3190752773	0.3403469625	0.350982805	0.3722544902	0.3722544902	0.3616186476	0.3403469625	0.3403469625	0.3722544902	0.3935261753	0.4254337031	0.553063814	0.5849713417	0.5636996566	0.5317921288	0.4254337031)
+
+//Wye-Connected Load
+New Load.L1     Bus1=B4.1.2.3     Phases=3    Conn=wye   Model=1  kv=0.4  basefreq=50 kw=14.39384    pf=0.9 daily=load1
+New Load.L2     Bus1=B4.1.2.3     Phases=3    Conn=wye   Model=1  kv=0.4  basefreq=50 kw=15.329       pf=0.9 daily=load2
+New Load.L3     Bus1=B9.1.2.3     Phases=3    Conn=wye   Model=1  kv=0.4  basefreq=50 kw=58.37991    pf=0.9 daily=load3
+New Load.L4     Bus1=B10.1.2.3   Phases=3    Conn=wye   Model=1  kv=0.4  basefreq=50 kw=100.7203    pf=0.9 daily=load4
+New Load.L5     Bus1=B5.1.2.3     Phases=3    Conn=wye   Model=1  kv=0.4  basefreq=50 kw=316.4903   pf=0.9 daily=load5
+New Load.L6     Bus1=B6.1.2.3     Phases=3    Conn=wye   Model=1  kv=0.4  basefreq=50 kw=520.641     pf=0.9 daily=load6
+New Load.L7     Bus1=B2.1.2.3     Phases=3    Conn=wye   Model=1  kv=0.4  basefreq=50 kw=7.6121       pf=0.9 daily=load7
+New Load.L8     Bus1=B7.1.2.3     Phases=3    Conn=wye   Model=1  kv=0.4  basefreq=50 kw=71.30822   pf=0.9 daily=load8
+New Load.L9     Bus1=B11.1.2.3   Phases=3    Conn=wye   Model=1  kv=0.4  basefreq=50 kw=91.91324   pf=0.9 daily=load9
+New Load.L10   Bus1=B8.1.2.3     Phases=3    Conn=wye   Model=1  kv=0.4  basefreq=50 kw=33.82397   pf=0.9 daily=load10
+New Load.L11   Bus1=B12.1.2.3   Phases=3    Conn=wye   Model=1  kv=0.4  basefreq=50 kw=17.16918   pf=0.9 daily=load11
+
+
+// -------------------------------------------------------------------------- //
+// PV Model 
+// -------------------------------------------------------------------------- //
+
+//P-T Curve is per unit of rated Pmpp vs temperature
+//For temp 25 degree Pmpp 1pu
+New XYCurve.MyPvsT   npts=4   xarray=[0 25 75 100]   yarray=[1.2 1 .8 .6]
+
+//Efficiency curve is per unit efficiency vs per unit power
+New XYCurve.MyEff   npts=4   xarray=[.1 .2 .4 1]   yarray=[.86 .9 .93 .97]
+
+//24-hours temp shape curve
+// Winter Temperature
+!New Tshape.MyTemp   npts=24   interval=1   temp=[-1.2	-1.3	-1.3	-1.2	-1.1	-0.8	-0.5	-0.3	-0.2	-0.1	0.1	0.2	0.4	0.3	-0.1	-0.4	-0.7	-0.8	-0.9	-0.9	-0.9	-0.9	-0.9	-0.9]  
+// Summer Temperature 8 July 2011
+New Tshape.MyTemp   npts=24   interval=1   temp=[16.9	16.3	16.1	16	16.6	18	19.4	20.7	22	23.2	24.1	24.8	25.4	25.5	25	24.5	24	23.3	22.6	21.8	20.8	19.8	19	18.3]  
+
+//24-hours Irradiance loadshape
+//Irradiance 8 July 2011
+New LoadShape.MyIrr npts=24 interval=1 
+~ mult=[0	0	0	0.022	0.057	0.21	0.331	0.453	0.566	0.655	0.707	0.706	0.741	0.456	0.388	0.519	0.433	0.298	0.19	0.09	0.18	0	0	0]
+
+
+//Connected at Load 1
+New PVSystem.PV_1A   phases=1   bus1=B4.1.2   kv=0.4   conn=delta   kva=24   irrad=1   Pmpp=24   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_1B   phases=1   bus1=B4.2.3   kv=0.4   conn=delta   kva=24   irrad=1   Pmpp=24   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_1C   phases=1   bus1=B4.3.1   kv=0.4   conn=delta   kva=24   irrad=1   Pmpp=24   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+
+//Connected at Load 2
+New PVSystem.PV_2A   phases=1   bus1=B4.1.2   kv=0.4   conn=delta   kva=25.333333   irrad=1   Pmpp=25.333333   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_2B   phases=1   bus1=B4.2.3   kv=0.4   conn=delta   kva=25.333333   irrad=1   Pmpp=25.333333   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_2C   phases=1   bus1=B4.3.1   kv=0.4   conn=delta   kva=25.333333   irrad=1   Pmpp=25.333333   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+
+//Connected at Load 3
+New PVSystem.PV_3A   phases=1   bus1=B9.1.2   kv=0.4   conn=delta   kva=96   irrad=1   Pmpp=96   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_3B   phases=1   bus1=B9.2.3   kv=0.4   conn=delta   kva=96   irrad=1   Pmpp=96   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_3C   phases=1   bus1=B9.3.1   kv=0.4   conn=delta   kva=96   irrad=1   Pmpp=96   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+
+/* Commented
+//Connected at Load4
+New PVSystem.PV_4A   phases=1   bus1=B10.1.2   kv=0.4   conn=delta   kva=84   irrad=1   Pmpp=84   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_4B   phases=1   bus1=B10.2.3   kv=0.4   conn=delta   kva=84   irrad=1   Pmpp=84   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_4C   phases=1   bus1=B10.3.1   kv=0.4   conn=delta   kva=84   irrad=1   Pmpp=84   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+*/
+
+//Connected at Load 7
+New PVSystem.PV_7A   phases=1   bus1=B2.1.2   kv=0.4   conn=delta   kva=13.33333   irrad=1   Pmpp=13.33333   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_7B   phases=1   bus1=B2.2.3   kv=0.4   conn=delta   kva=13.33333   irrad=1   Pmpp=13.33333   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_7C   phases=1   bus1=B2.3.1   kv=0.4   conn=delta   kva=13.33333   irrad=1   Pmpp=13.33333   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+
+//Connected at Load 8
+New PVSystem.PV_8A   phases=1   bus1=B7.1.2   kv=0.4   conn=delta   kva=120   irrad=1   Pmpp=120   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_8B   phases=1   bus1=B7.2.3   kv=0.4   conn=delta   kva=120   irrad=1   Pmpp=120   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_8C   phases=1   bus1=B7.3.1   kv=0.4   conn=delta   kva=120   irrad=1   Pmpp=120   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+
+//Connected at Load 9
+New PVSystem.PV_9A   phases=1   bus1=B11.1.2   kv=0.4   conn=delta   kva=153.33333   irrad=1   Pmpp=153.33333   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_9B   phases=1   bus1=B11.2.3   kv=0.4   conn=delta   kva=153.33333   irrad=1   Pmpp=153.33333   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_9C   phases=1   bus1=B11.3.1   kv=0.4   conn=delta   kva=153.33333   irrad=1   Pmpp=153.33333   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+
+//Connected at Load 10
+New PVSystem.PV_10A   phases=1   bus1=B8.1.2   kv=0.4   conn=delta   kva=56   irrad=1   Pmpp=56   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_10B   phases=1   bus1=B8.2.3   kv=0.4   conn=delta   kva=56   irrad=1   Pmpp=56   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_10C   phases=1   bus1=B8.3.1   kv=0.4   conn=delta   kva=56   irrad=1   Pmpp=56   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+
+//Connected at Load 11
+New PVSystem.PV_11A   phases=1   bus1=B12.1.2   kv=0.4   conn=delta   kva=28   irrad=1   Pmpp=28   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_11B   phases=1   bus1=B12.2.3   kv=0.4   conn=delta   kva=28   irrad=1   Pmpp=28   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_11C   phases=1   bus1=B12.3.1   kv=0.4   conn=delta   kva=28   irrad=1   Pmpp=28   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+
+
+//If the PV system installed in commercial buildings with capacity equal to the peak load
+//Connected at Load4 with PV from comercial buildings
+New PVSystem.PV_4A   phases=1   bus1=B10.1.2   kv=0.4   conn=delta   kva=100.72   irrad=1   Pmpp=100.72   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_4B   phases=1   bus1=B10.2.3   kv=0.4   conn=delta   kva=100.72   irrad=1   Pmpp=100.72   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_4C   phases=1   bus1=B10.3.1   kv=0.4   conn=delta   kva=100.72   irrad=1   Pmpp=100.72   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+
+//Connected at Load5 
+New PVSystem.PV_5A   phases=1   bus1=B5.1.2   kv=0.4   conn=delta   kva=253.2   irrad=1   Pmpp=253.2   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_5B   phases=1   bus1=B5.2.3   kv=0.4   conn=delta   kva=253.2   irrad=1   Pmpp=253.2   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_5C   phases=1   bus1=B5.3.1   kv=0.4   conn=delta   kva=253.2   irrad=1   Pmpp=253.2   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+
+//Connected at Load6
+New PVSystem.PV_6A   phases=1   bus1=B6.1.2   kv=0.4   conn=delta   kva=416.5   irrad=1   Pmpp=416.5   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_6B   phases=1   bus1=B6.2.3   kv=0.4   conn=delta   kva=416.5   irrad=1   Pmpp=416.5   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+New PVSystem.PV_6C   phases=1   bus1=B6.3.1   kv=0.4   conn=delta   kva=416.5   irrad=1   Pmpp=416.5   temperature=25   PF=1
+~ effcurve=MyEff   P-TCurve=MyPvsT daily=MyIrr Tdaily=MyTemp
+
+
+//Energymeter
+New EnergyMeter.Feeder1 element=Transformer.T1 terminal=1
+New EnergyMeter.Feeder2 element=Transformer.T2 terminal=1
+
+
+New Monitor.T1_Power Element=Transformer.T1 terminal=1 mode=1 ppolar=no
+New Monitor.T2_Power Element=Transformer.T2 terminal=1 mode=1 ppolar=no
+New Monitor.All_Voltage Element=Transformer.T1 terminal=1 mode=0
+New Monitor.B1_Voltage Element=Line.Line1 terminal=1 mode=0 
+New Monitor.B4_Voltage Element=Line.Line1 terminal=2 mode=0
+New Monitor.B9_Voltage Element=Line.Line2 terminal=2 mode=0
+New Monitor.B10_Voltage Element=Line.Line3 terminal=2 mode=0
+New Monitor.B5_Voltage Element=Line.Line4 terminal=2 mode=0
+New Monitor.B2_Voltage Element=Line.Line5 terminal=1 mode=0
+New Monitor.B6_Voltage Element=Line.Line5 terminal=2 mode=0
+New Monitor.B7_Voltage Element=Line.Line6 terminal=2 mode=0
+New Monitor.B11_Voltage Element=Line.Line7 terminal=2 mode=0
+New Monitor.B8_Voltage Element=Line.Line8 terminal=2 mode=0
+New Monitor.B12_Voltage Element=Line.Line9 terminal=2 mode=0
+
+
+Set Voltagebases=[10, 0.4]     
+calcv
+
+Set mode=daily   number=24   stepsize=1h   !hour=0
+Solve
+
+
+Export monitors all_voltage
+Plot monitor object= all_voltage channels=(1 3 5 ) bases=[5773.503 5773.503 5773.503]
+Export monitors b1_voltage
+Plot monitor object= b1_voltage channels=(1 3 5 ) bases=[230.94 230.94 230.94]
+Export monitors b4_voltage
+Plot monitor object= b4_voltage channels=(1 3 5 ) bases=[230.94 230.94 230.94]
+Export monitors b9_voltage
+Plot monitor object= b9_voltage channels=(1 3 5 ) bases=[230.94 230.94 230.94]
+Export monitors b10_voltage
+Plot monitor object= b10_voltage channels=(1 3 5 ) bases=[230.94 230.94 230.94]
+Export monitors b5_voltage
+Plot monitor object= b5_voltage channels=(1 3 5 ) bases=[230.94 230.94 230.94]
+Export monitors b2_voltage
+Plot monitor object= b2_voltage channels=(1 3 5 ) bases=[230.94 230.94 230.94]
+Export monitors b6_voltage
+Plot monitor object= b6_voltage channels=(1 3 5 ) bases=[230.94 230.94 230.94]
+Export monitors b7_voltage
+Plot monitor object= b7_voltage channels=(1 3 5 ) bases=[230.94 230.94 230.94]
+Export monitors b11_voltage
+Plot monitor object= b11_voltage channels=(1 3 5 ) bases=[230.94 230.94 230.94]
+Export monitors b8_voltage
+Plot monitor object= b8_voltage channels=(1 3 5 ) bases=[230.94 230.94 230.94]
+Export monitors b12_voltage
+Plot monitor object= b12_voltage channels=(1 3 5 ) bases=[230.94 230.94 230.94]
+
+
+Export monitors t1_power
+Plot monitor object= t1_power channels=(1 2 3 4 5 6 )
+Export monitors t2_power
+Plot monitor object= t2_power channels=(1 2 3 4 5 6 )
+Export monitors all_voltage
+Plot monitor object= all_voltage channels=(9 11 13 )
+Export monitors b1_voltage
+Plot monitor object= b1_voltage channels=(7 9 11 )
+Export monitors b9_voltage
+Plot monitor object= b9_voltage channels=(7 9 11 )
+Export monitors b10_voltage
+Plot monitor object= b10_voltage channels=(7 9 11 )
+Export monitors b5_voltage
+Plot monitor object= b5_voltage channels=(13 15 17 19 21 23 )
+Export monitors b2_voltage
+Plot monitor object= b2_voltage channels=(7 9 11 )
+Export monitors b7_voltage
+Plot monitor object= b7_voltage channels=(7 9 11 )
+Export monitors b11_voltage
+Plot monitor object= b11_voltage channels=(7 9 11 )
+Export monitors b8_voltage
+Plot monitor object= b8_voltage channels=(7 9 11 )
+Export monitors b12_voltage
+Plot monitor object= b12_voltage channels=(7 9 11 )
+Show Eventlog
